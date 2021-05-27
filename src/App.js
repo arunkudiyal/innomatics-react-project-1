@@ -3,6 +3,7 @@ import './App.css';
 
 function App() {
   return (
+    // JSX - JavaScript Syntax Extension - (HTML + JS)
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
