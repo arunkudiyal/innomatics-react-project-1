@@ -5,12 +5,13 @@ import Button from './Button'
 // 2. Class-Based Components
 
 // 1. Function-Based Compoennt
-const Header = ( {title} ) => {
+const Header = ( {title, tasks} ) => {
     // Properties 
     // const name = 'Arun'
 
     const onClick1 = (e) => {
         console.log('Adding the tasks...');
+        console.log(tasks)
         // console.log(e);
     }
 
