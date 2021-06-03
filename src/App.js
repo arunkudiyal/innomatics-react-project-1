@@ -37,12 +37,18 @@ function App() {
     }
   ])
 
-  return (
+  // Delete the task
+  const onDelete = (id) => {
+    // Manipulate the tasks state - setTasks()
+    setTasks(tasks.filter((task) => task.id !== id))
+  }
 
+
+  return (
     // JSX 
     <div className="container">
       <Header tasks={tasks} title='Task Tracker' />
-      <Tasks tasks={tasks} />
+      {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={onDelete} /> : 'No Tasks to Show...'}
     
     </div>
 
