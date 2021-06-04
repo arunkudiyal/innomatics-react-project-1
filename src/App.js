@@ -5,11 +5,12 @@ import { useState } from 'react'
 
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
+import AddTask from './components/AddTask';
 
 function App() {
 
   // GLOBAL STATE
-  // tasks State
+  // Tasks State
   const [tasks, setTasks] = useState([
     {
         id: 1,
@@ -43,12 +44,23 @@ function App() {
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
+  // Toggle Reminder
+  const toggleReminder = (id) => {
+    // Manipulate the tasks state - setTasks()
+    setTasks(
+      tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
+    )
+  }
+
 
   return (
     // JSX 
     <div className="container">
       <Header tasks={tasks} title='Task Tracker' />
-      {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={onDelete} /> : 'No Tasks to Show...'}
+      <AddTask />
+      {tasks.length > 0 ? (
+        <Tasks tasks={tasks} onDelete={onDelete} onToggle={toggleReminder} /
+      >) : ('No Tasks to Show...')}
     
     </div>
 
