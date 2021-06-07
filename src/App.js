@@ -9,7 +9,7 @@ import AddTask from './components/AddTask';
 
 function App() {
 
-  // GLOBAL STATE
+  // GLOBAL STATE | App-Level State
   // Tasks State
   const [tasks, setTasks] = useState([
     {
@@ -38,6 +38,18 @@ function App() {
     }
   ])
 
+  // Add the task
+  const addTask = (task) => {
+    // console.log(task);
+
+    // We donot have an ID | Generating an ID
+    const id = Math.floor(Math.random() * 10000) + 1
+    const newTask = { id, ...task }
+
+    // Add the newTask and add it in the tasks State
+    setTasks([...tasks, newTask])
+  }
+
   // Delete the task
   const onDelete = (id) => {
     // Manipulate the tasks state - setTasks()
@@ -57,7 +69,7 @@ function App() {
     // JSX 
     <div className="container">
       <Header tasks={tasks} title='Task Tracker' />
-      <AddTask />
+      <AddTask onAdd={addTask} />
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={onDelete} onToggle={toggleReminder} /
       >) : ('No Tasks to Show...')}
