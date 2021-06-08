@@ -1,5 +1,5 @@
 // Hooks
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // const taaks = [ {}, {}, {} ] -> Property
 
@@ -11,47 +11,56 @@ function App() {
 
   // GLOBAL STATE | App-Level State
   // Tasks State
-  const [tasks, setTasks] = useState([
-    {
-        id: 1,
-        text: 'Vaccine Appointment',
-        day: 'April 1st, 2021 at 5 PM',
-        reminder: true
-    },
-    {
-        id: 2,
-        text: 'Assignment',
-        day: 'April 4th, 2021 at 10 AM',
-        reminder: false
-    },
-    {
-        id: 3,
-        text: 'Project Submission',
-        day: 'April 3rd, 2021 at 12 PM',
-        reminder: false
-    },
-    {
-        id: 4,
-        text: 'Meeting with the Team',
-        day: 'April 2nd, 2021 at 6 PM',
-        reminder: true 
+  const [tasks, setTasks] = useState([])
+
+  // presesnt data the moment application is loaded
+  useEffect(() => {
+    const getTasks = async () => {
+      const tasksFromServer = await fetchTasks()
+
+      // Seeting the data coming from the server as our app-level state
+      setTasks(tasksFromServer)
     }
-  ])
+
+    getTasks()
+  }, [])
+
+  // Fetch all the data from the back-end
+  const fetchTasks = async () => {
+    const res = await fetch('http://localhost:5000/tasks', {method: 'GET'})
+    const data = await res.json()
+
+    return data
+  }  
 
   // Add the task
-  const addTask = (task) => {
-    // console.log(task);
+  const addTask = async (task) => {
+    // POST the newTask to the server
+    const res = await fetch('http://localhost:5000/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(task)
+    })
+
+    const data = await res.json()
+    // Reflect the changes from the server to the states
+    setTasks([...tasks, data])
 
     // We donot have an ID | Generating an ID
-    const id = Math.floor(Math.random() * 10000) + 1
-    const newTask = { id, ...task }
+    // const id = Math.floor(Math.random() * 10000) + 1
+    // const newTask = { id, ...task }
 
     // Add the newTask and add it in the tasks State
-    setTasks([...tasks, newTask])
+    // setTasks([...tasks, newTask])
   }
 
   // Delete the task
-  const onDelete = (id) => {
+  const onDelete = async (id) => {
+    // Deleting the data from the server
+    await fetch(`http://localhost:5000/tasks/${id}`, {method: 'DELETE'})
+
     // Manipulate the tasks state - setTasks()
     setTasks(tasks.filter((task) => task.id !== id))
   }
