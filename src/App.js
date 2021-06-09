@@ -1,11 +1,14 @@
 // Hooks
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 // const taaks = [ {}, {}, {} ] -> Property
 
+import Footer from './components/Footer';
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 import AddTask from './components/AddTask';
+import About from './components/About';
 
 function App() {
 
@@ -99,14 +102,24 @@ function App() {
 
   return (
     // JSX 
-    <div className="container">
-      <Header tasks={tasks} title='Task Tracker' />
-      <AddTask onAdd={addTask} />
-      {tasks.length > 0 ? (
-        <Tasks tasks={tasks} onDelete={onDelete} onToggle={toggleReminder} /
-      >) : ('No Tasks to Show...')}
+    <Router>
+      <div className="container">
+        <Header tasks={tasks} title='Task Tracker' />
+      
+        <Route path='/' exact render={(props) => (
+          <>
+            <AddTask onAdd={addTask} />
+            {tasks.length > 0 ? (
+              <Tasks tasks={tasks} onDelete={onDelete} onToggle={toggleReminder} /
+            >) : ('No Tasks to Show...')}
+          </>
+        )} />  
+
+        <Route path='/about' component={About} />  
+        <Footer />
+      </div>
+    </Router>
     
-    </div>
 
     // <h2>Trying to chcek...</h2> -> Cannot do that
   );

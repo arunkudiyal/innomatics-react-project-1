@@ -1,3 +1,5 @@
+import { useLocation } from 'react-router-dom'
+
 import PropTypes from 'prop-types'
 import Button from './Button'
 // How to create component
@@ -6,6 +8,9 @@ import Button from './Button'
 
 // 1. Function-Based Compoennt
 const Header = ( {title, tasks} ) => {
+
+    const location = useLocation()
+
     // Properties 
     // const name = 'Arun'
 
@@ -19,7 +24,7 @@ const Header = ( {title, tasks} ) => {
         // JSX
         <header className='header'>
             <h1> {title} </h1>
-            <Button onClick={onClick1} text='Add' />
+            {location.pathname === '/' && ( <Button onClick={onClick1} text='Add' /> )}
         </header>
     )
 }
