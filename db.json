@@ -1,28 +1,22 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "text": "Vaccine Appointment",
-      "day": "April 1st, 2021 at 5 PM",
-      "reminder": true
-    },
-    {
-      "id": 3,
-      "text": "Project Submission",
-      "day": "April 3rd, 2021 at 12 PM",
-      "reminder": false
-    },
-    {
-      "id": 4,
-      "text": "Meeting with the Team",
-      "day": "April 2nd, 2021 at 6 PM",
-      "reminder": true
-    },
-    {
-      "text": "New Assignment",
-      "day": "June 12th, 2021 at 1 PM",
+      "text": "Vaccination",
+      "day": "June10th, 2021 at 3 PM",
       "reminder": false,
-      "id": 6
+      "id": 1
+    },
+    {
+      "text": "Assignment",
+      "day": "Hune 16th, 2021 at 10 PM",
+      "reminder": true,
+      "id": 2
+    },
+    {
+      "text": "Dinner with Friends",
+      "day": "June 9th, 2021 at 9 PM",
+      "reminder": false,
+      "id": 3
     }
   ]
 }

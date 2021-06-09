@@ -33,6 +33,14 @@ function App() {
     return data
   }  
 
+  // Fetch a particular task with the id
+  const fetchTask = async (id) => {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`)
+    const data = await res.json()
+
+    return data
+  }
+
   // Add the task
   const addTask = async (task) => {
     // POST the newTask to the server
@@ -66,10 +74,25 @@ function App() {
   }
 
   // Toggle Reminder
-  const toggleReminder = (id) => {
+  const toggleReminder = async (id) => {
+    // Get the data from the server and create an updatedTask
+    const taskToToggle = await fetchTask(id)
+    const updatedTask = {...taskToToggle, reminder: !taskToToggle.reminder}
+
+    // Update the server by sending a PUT request
+    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(updatedTask)
+    })
+
+    const data = await res.json()
+
     // Manipulate the tasks state - setTasks()
     setTasks(
-      tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
+      tasks.map((task) => task.id === id ? {...task, reminder: data.reminder} : task)
     )
   }
 
